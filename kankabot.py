@@ -60,26 +60,6 @@ latest_update = ""
 dir_path = os.path.dirname(os.path.realpath(__file__))
 last_update_path = f"{dir_path}/last_update.txt"
 
-default_thumbs = {
-  "character": "https://kanka.io/images/defaults/patreon/characters_thumb.png",
-  "location": "https://kanka.io/images/defaults/patreon/locations_thumb.png",
-  "journal": "https://kanka.io/images/defaults/patreon/journals_thumb.png",
-  "timeline": "https://kanka.io/images/defaults/patreon/timelines_thumb.png",
-  "family": "https://kanka.io/images/defaults/patreon/families_thumb.png",
-  "organisation": "https://kanka.io/images/defaults/patreon/organisations_thumb.png",
-  "item": "https://kanka.io/images/defaults/patreon/items_thumb.png",
-  "note": "https://kanka.io/images/defaults/patreon/notes_thumb.png",
-  "event": "https://kanka.io/images/defaults/patreon/events_thumb.png",
-  "calendar": "https://kanka.io/images/defaults/patreon/calendars_thumb.png",
-  "race": "https://kanka.io/images/defaults/patreon/races_thumb.png",
-  "quest": "https://kanka.io/images/defaults/patreon/quests_thumb.png",
-  "map": "https://kanka.io/images/defaults/patreon/maps_thumb.png",
-  "ability": "https://kanka.io/images/defaults/patreon/abilities_thumb.png",
-  "tag": "https://kanka.io/images/defaults/patreon/tags_thumb.png",
-  "conversation": "https://kanka.io/images/defaults/patreon/conversations_thumb.png",
-  "dice_roll": "https://kanka.io/images/defaults/patreon/dice_rolls_thumb.png"
-}
-
 plural = {
   "character": "characters",
   "location": "locations",
@@ -186,6 +166,7 @@ def poll_updates():
   
   set_sync = True
   entities = fetch_updated_entities(set_sync)
+  entity_data = None
   
   embeds = []
   for entity in entities:
@@ -201,10 +182,10 @@ def poll_updates():
       child_id = entity["child_id"]
       if entity["type"] in plural:
         p = plural[entity["type"]]
-        data = get(f"{p}/{child_id}")
-        if data and len(data) > 0:
-          if "entry" in data:
-            description = str(data["entry"])
+        entity_data = get(f"{p}/{child_id}")
+        if entity_data and len(entity_data) > 0:
+          if "entry" in entity_data:
+            description = str(entity_data["entry"])
     
     description = re.sub('<[^<]+?>', '', description)
     description = re.sub('\[[0-9a-z]+:[0-9]+\]', '...', description)
@@ -273,14 +254,11 @@ def poll_updates():
     if "type" in entity:
       entity_type = entity["type"]
     
-    if len(entity_type) > 0 and entity_type in default_thumbs:
-      entity_icon = default_thumbs[entity_type]
-      thumbnail["url"] = entity_icon
+    if entity_data and len(entity_data) > 0 and "image_thumb" in entity_data:
+      entity_icon = entity_data["image_thumb"]
+      if entity_icon and len(entity_icon) > 0:
+        thumbnail["url"] = entity_icon
     
-    if "header_image" in entity and entity["header_image"]:
-      thumb_url = entity["header_image"]
-      if len(thumb_url) > 0:
-        thumbnail["url"] = thumb_url
     embed["thumbnail"] = thumbnail
     
     footer = {}
@@ -411,10 +389,6 @@ def login(sync):
 def discord(url, user, message, embeds = []):
   if not discord_enabled:
     return
-  
-  # for all params, see
-  # https://discordapp.com/developers/docs/resources/webhook#execute-webhook
-  # https://discord.com/developers/docs/resources/channel#embed-object
   
   data = {}
   data["content"] = message
