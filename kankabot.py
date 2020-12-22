@@ -14,6 +14,8 @@
 # Requires Python 3
 # Licensed under GPL 3
 
+# TODO: Handle large number of updated entities since last run - summarize
+
 import kanka
 import requests
 import json
@@ -36,6 +38,8 @@ lang = "en"
 campaign_id = <YOUR CAMPAIGN ID HERE>
 campaign_name = "<YOUR CAMPAIGN NAME>"
 ignore_before = "2020-12-01T12:00:00.000000Z"
+
+title_hide_list = ["private", "hidden", "secret"]
 
 default_user_icon = "https://kanka.io/images/defaults/user.svg"
 
@@ -210,6 +214,15 @@ def poll_updates():
     if "name" in entity:
       if len(entity["name"]) > 0:
         name = entity["name"]
+      
+      hide = False
+      for word in title_hide_list:
+        if word in name.lower():
+          hide = True
+          break
+      
+      if hide:
+        continue
     
     user_name = "Unknown"
     user_icon = ""

@@ -31,6 +31,7 @@ Hope this is helpful to others, but no guarantees :)
 ## Features
 - Pretty Discord embed formatting
 - Uses user names, colors, categories and avatars from Kanka.io
+- Exclude posts if they're set to private or the name contains certain words
 - Support for localization/I18N
 - Configuration for colors, footer, titles etc. in Discord embeds
 - Somewhat smart text shortening
