@@ -5,6 +5,8 @@ A Kanka.io to Discord bridge. Automatically posts Kanka changes to a Discord cha
 
 This is mostly a quickly cobbled together Python script to post changes made in Kanka.io to a Discord channel.
 Using the Kanka API and Discord channel webhooks. Requires Python 3.
+Also requires `dateutil`:  
+`pip install python-dateutil`
 
 Hope this is helpful to others, but no guarantees :)
 

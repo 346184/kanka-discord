@@ -281,7 +281,7 @@ def poll_updates():
     
     embeds.append(embed)
     
-  discord(discord_channel_log, discord_name, "", embeds)
+  discord(discord_channel_post, discord_name, "", embeds)
 
 def fetch_updated_entities(sync=False):
   out = []
