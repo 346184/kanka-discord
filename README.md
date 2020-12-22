@@ -12,9 +12,9 @@ Hope this is helpful to others, but no guarantees :)
 1. Check out the repo or grab `kanka.py` and `kankabot.py` at a minimum
 2. Edit `kankabot.py`:
   - Insert your [Kanka API key](https://kanka.io/de/docs/1.0/setup): `secret = "<YOUR KANKA API KEY HERE>"`
-  - Insert your [Discord channel webhook URL](https://support.discord.com/hc/en-us/articles/228383668-Intro-to-Webhooks): `discord_channel_post = "<LOG DISCORD CHANNEL WEBHOOK URL>"`
+  - Insert your [Discord channel webhook URL](https://support.discord.com/hc/en-us/articles/228383668-Intro-to-Webhooks): `discord_channel_post = "<LOG DISCORD CHANNEL WEBHOOK URL>"`  
     This should start with `https://discord.com/api/webhooks/...`
-  - Insert your campaign name (`campaign_name`) and ID (`camapign_id`)
+  - Insert your campaign name (`campaign_name`) and ID (`camapign_id`)  
     You can view your campaign ID in your URL on Kanka.io, at the dashboard:
     `https://kanka.io/de/campaign/<ID>` - insert this as an int above
   - Optionally, change `lang` if you want links to point to non-english pages
