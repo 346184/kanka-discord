@@ -23,7 +23,10 @@ Hope this is helpful to others, but no guarantees :)
   - Optionally, set an image for the webhook inside discord
   - In general, have a look at the top of the Python file to see all options :)
 3. Run `python kankabot.py`, making sure to use Python 3
-4. You may want to have this run as a service or cron job
+4. You may want to start this as a service or cron job  
+   For example, I'm using this crontab line:  
+   `@reboot sleep 60 && cd /opt/kanka-discord && /usr/bin/python3 /opt/kanka-discord/kankabot.py > /tmp/kanka.log 2>&1`  
+   This starts the script 60 seconds after each reboot (waiting for the network being up) and logs the output to `/tmp/kanka.log` in case of errors
 
 ## Features
 - Pretty Discord embed formatting
